@@ -1,4 +1,5 @@
 from flask import Flask
+from model import User
 
 
 def create_app(config_filename):
@@ -13,6 +14,13 @@ def create_app(config_filename):
 
     from model import db
     db.init_app(app)
+
+    from flask_login import LoginManager
+    login = LoginManager(app)
+
+    @login.user_loader
+    def load_user(id):
+        return User.query.get(int(id))
 
     @app.route('/')
     def hello_world():

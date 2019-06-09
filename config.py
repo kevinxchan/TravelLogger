@@ -2,7 +2,7 @@ import os
 from configparser import ConfigParser
 
 
-def config(filename='TravelLogger.ini', section='DB_ACCESS'):
+def config(section, filename='TravelLogger.ini'):
     # create a parser
     parser = ConfigParser()
     # read config file
@@ -20,7 +20,7 @@ def config(filename='TravelLogger.ini', section='DB_ACCESS'):
     return db
 
 
-db_credentials = config()
+db_credentials = config(section='DB_ACCESS')
 username = db_credentials['user']
 database = db_credentials['database']
 host = db_credentials['host']
@@ -29,3 +29,4 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 SQLALCHEMY_ECHO = False
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 SQLALCHEMY_DATABASE_URI = 'postgresql://{}@{}/{}'.format(username, host, database)
+SECRET_KEY = config(section='SECRET_KEY')['secret_key']

@@ -1,6 +1,7 @@
 from marshmallow import fields, validate
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 from DateConverter import DateConverter
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -8,7 +9,7 @@ ma = Marshmallow()
 db = SQLAlchemy()
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
